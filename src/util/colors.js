@@ -7,8 +7,7 @@ export const COLOR_CODES = Object.freeze([
     "#44A1A0"
 ]);
 
-export function getRandomColor (): string {
+export function getRandomColor(): string {
     const colorIndex = Math.floor(Math.random() * (COLOR_CODES.length));
-    console.log(colorIndex);
     return COLOR_CODES[colorIndex];
 } 
