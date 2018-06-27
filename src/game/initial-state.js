@@ -11,7 +11,7 @@ const initialMapPoints = [
   {x: CANVAS_WIDTH / 2 - 10, y: CANVAS_HEIGHT / 2 - 10},
   {x: CANVAS_WIDTH / 2 + 10, y: CANVAS_HEIGHT / 2 - 10},
   {x: CANVAS_WIDTH / 2 + 10, y: CANVAS_HEIGHT / 2 - 20},
-  {x: CANVAS_WIDTH / 2 + 20, y: CANVAS_HEIGHT / 2 - 20},
+  {x: CANVAS_WIDTH / 2, y: CANVAS_HEIGHT / 2 - 20},
   {x: CANVAS_WIDTH / 2 + 20, y: CANVAS_HEIGHT / 2 + 10},
   {x: CANVAS_WIDTH / 2 + 10, y: CANVAS_HEIGHT / 2 + 20},
   {x: CANVAS_WIDTH / 2 - 10, y: CANVAS_HEIGHT / 2 + 20},
