@@ -19,6 +19,9 @@ jobs:
     steps:
       - checkout
 
+      - run: git config --global user.email 'thmproj@gmail.com' 
+      - run: git config --global user.name 'torolchuk' 
+
       # Download and cache dependencies
       - restore_cache:
           keys:
