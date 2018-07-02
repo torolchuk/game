@@ -3,20 +3,21 @@ import type { GameStateInterface } from '../state';
 import { rotatePoint } from '../../util/geometry';
 import { moveTo, lineTo } from '../../util/render';
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../consts';
+import { orderBy } from 'lodash';
 
 const playerPosition = {
   x: CANVAS_WIDTH / 2,
   y: CANVAS_HEIGHT / 2,
 };
 
-function renderPlayer(context: CanvasRenderingContext2D, { player } : GameStateInterface) {
+function renderPlayer(context: CanvasRenderingContext2D, { player }: GameStateInterface) {
   const x = playerPosition.x;
   const y = playerPosition.y;
 
   const path = new Path2D();
   moveTo(path, { x, y });
-  lineTo(path, { x: x + 5, y, });
-  
+  lineTo(path, { x: x + 5, y });
+
   context.strokeStyle = '#666666';
   context.stroke(path);
 }
