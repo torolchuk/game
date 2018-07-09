@@ -4,23 +4,21 @@ export type Point = {
   y: number,
 };
 
-export type Point3D = {
-  x: number,
-  y: number,
-  z: number,
-};
-
 export type Line = {
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
+  p1: Point,
+  p2: Point,
 };
 
-export function projectPerspective(point: Point, angle: number): Point {
+export function getLineAngle(line: Line): number {
+  const a = line.p1.x - line.p2.x;
+  const b = line.p1.y - line.p2.y;
+  return Math.atan2(a, b);
+}
+
+export function getLineCenter(line: Line): Point {
   return {
-    x: point.x * Math.sin(angle) - point.y * Math.cos(angle),
-    y: point.x * Math.cos(angle) + point.y * Math.sin(angle),
+    x: (line.p1.x + line.p2.x) / 2,
+    y: (line.p1.y + line.p2.y) / 2,
   };
 }
 
@@ -49,49 +47,7 @@ export function movePoint(point: Point, amount: number, angle: number): Point {
   const s = Math.sin(angle);
 
   return {
-    x: point.x - amount * c,
-    y: point.y - amount * s,
+    x: point.x + amount * c,
+    y: point.y + amount * s,
   };
-}
-
-export function project3DPoint(point: Point3D, camera: Point3D, angle: number): Point {
-  const cx = Math.cos(0);
-  const sx = Math.sin(0);
-
-  const cy = Math.cos(angle);
-  const sy = Math.sin(angle);
-
-  const cz = Math.cos(0);
-  const sz = Math.sin(0);
-
-  const dp = {
-    x: point.x - camera.x,
-    y: point.y - camera.y,
-    z: point.z - camera.z,
-  };
-
-  const dx = cy * (sz * dp.y + cz * dp.x) - sy * dp.z;
-  const dy = sx * (cy * dp.z + sy * (sz * dp.y + cz * dp.x)) + sz * (cz * dp.y - sz * dp.x);
-  const dz = cx * (cy * dp.z + sy * (sz * dp.y + cz * dp.x)) - sx * (cz * dp.y - sz * dp.x);
-
-  const ex = 150;
-  const ey = 150;
-  const ez = 150;
-
-  return {
-    x: (dx - ex) * (ez / dz),
-    y: (dy - ey) * (ez + dz),
-  };
-}
-
-export function getDistance(p1: Point, p2: Point): number {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-}
-
-export function getShortDistanceToLine(line: Line, point: Point): number {
-  const center = {
-    x: (line.x1 + line.x2) / 2,
-    y: (line.y1 + line.y2) / 2,
-  };
-  return getDistance(center, point);
 }

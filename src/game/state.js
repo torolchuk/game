@@ -1,22 +1,19 @@
 // @flow
-export type PlayerStateInterface = {|
-  position: {
-    x: number;
-    y: number;
-    angle: number;
-  };
-|}
+import type { Sector } from '../game/core/types';
 
-export type WallStateInterface = {|
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  color: string;
+export type PlayerPosition = {|
+  x: number;
+  y: number;
+  angle: number;
+  sectorId: number;
+|};
+
+export type PlayerStateInterface = {|
+  position: PlayerPosition;
 |}
 
 export type MapStateInterface = {|
-  walls: Array<WallStateInterface>;
+  sectors: Array<Sector>;
 |}
 
 export type GameStateInterface = {|
@@ -29,4 +26,5 @@ export type KeysStateInterface = {|
   ArrowRight: boolean,
   ArrowUp: boolean,
   ArrowDown: boolean,
+  Alt: boolean,
 |};

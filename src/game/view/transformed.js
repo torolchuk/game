@@ -14,12 +14,15 @@ function renderPlayer(context: CanvasRenderingContext2D, { player }: GameStateIn
   const x = playerPosition.x;
   const y = playerPosition.y;
 
-  const path = new Path2D();
-  moveTo(path, { x, y });
-  lineTo(path, { x: x + 5, y });
+  context.save();
+  context.beginPath();
+
+  moveTo(context, { x, y });
+  lineTo(context, { x: x + 5, y });
 
   context.strokeStyle = '#666666';
-  context.stroke(path);
+  context.stroke();
+  context.restore();
 }
 
 function renderMap(context: CanvasRenderingContext2D, { map, player }: GameStateInterface) {
@@ -28,15 +31,18 @@ function renderMap(context: CanvasRenderingContext2D, { map, player }: GameState
   const diffX = x - playerPosition.x;
   const diffY = y - playerPosition.y;
 
-  const path = new Path2D();
-
-  map.walls.forEach(wall => {
-    moveTo(path, rotatePoint({ x: wall.x1 - diffX, y: wall.y1 - diffY }, playerPosition, -angle));
-    lineTo(path, rotatePoint({ x: wall.x2 - diffX, y: wall.y2 - diffY }, playerPosition, -angle));
-
-    context.strokeStyle = wall.color;
-    context.stroke(path);
+  map.sectors.forEach(sector => {
+    sector.walls.forEach(wall => {
+      context.save();
+      context.beginPath();
+      moveTo(context, rotatePoint({ x: wall.p1.x - diffX, y: wall.p1.y - diffY }, playerPosition, -angle));
+      lineTo(context, rotatePoint({ x: wall.p2.x - diffX, y: wall.p2.y - diffY }, playerPosition, -angle));
+      context.strokeStyle = wall.portal ? '#DD00DD' :  wall.color;
+      context.stroke();
+      context.restore();
+    });
   });
+
 }
 
 export default function render(context: CanvasRenderingContext2D, game: GameStateInterface) {

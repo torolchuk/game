@@ -1,36 +1,52 @@
 // @flow
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../consts";
-import { generateWallArrayFromPointsArray } from "../util/map";
-import type { GameStateInterface } from "./state";
+import type { GameStateInterface } from './state';
+import { point, portal, sector, wall } from './factory';
+import { getRandomColor } from '../util/colors';
 
-const WALL_SIZE = 10;
-
-const initialMapPoints = [
-  {x: CANVAS_WIDTH / 2 - 20, y: CANVAS_HEIGHT / 2 - 20},
-  {x: CANVAS_WIDTH / 2 - 10, y: CANVAS_HEIGHT / 2 - 20},
-  {x: CANVAS_WIDTH / 2 - 10, y: CANVAS_HEIGHT / 2 - 10},
-  {x: CANVAS_WIDTH / 2 + 10, y: CANVAS_HEIGHT / 2 - 10},
-  {x: CANVAS_WIDTH / 2 + 10, y: CANVAS_HEIGHT / 2 - 20},
-  {x: CANVAS_WIDTH / 2 + 20, y: CANVAS_HEIGHT / 2 - 20},
-  {x: CANVAS_WIDTH / 2 + 20, y: CANVAS_HEIGHT / 2 + 10},
-  {x: CANVAS_WIDTH / 2 + 10, y: CANVAS_HEIGHT / 2 + 20},
-  {x: CANVAS_WIDTH / 2 - 10, y: CANVAS_HEIGHT / 2 + 20},
-  {x: CANVAS_WIDTH / 2 - 20, y: CANVAS_HEIGHT / 2 + 10},
-  {x: CANVAS_WIDTH / 2 - 20, y: CANVAS_HEIGHT / 2 - 20},
-];
-
-const initialWalls = generateWallArrayFromPointsArray(initialMapPoints);
+export const DEFAULT_HEIGHT = 10;
 
 const initialState: GameStateInterface = {
   player: {
     position: {
-      x: CANVAS_WIDTH / 2,
-      y: CANVAS_HEIGHT / 2,
+      x: 10,
+      y: 25,
       angle: 0,
+      sectorId: 0,
     },
   },
   map: {
-    walls: initialWalls
+    sectors: [
+      sector(DEFAULT_HEIGHT, [
+        wall(point(0, 0), point(30, 0)),
+        wall(point(30, 0), point(30, 20)),
+        wall(point(30, 20), point(30, 30), getRandomColor(), portal(1, 0)),
+        wall(point(30, 30), point(30, 50)),
+        wall(point(30, 50), point(0, 50)),
+        wall(point(0, 50), point(0, 0)),
+      ]),
+      sector(DEFAULT_HEIGHT, [
+        wall(point(40, 0), point(50, 0)),
+        wall(point(50, 0), point(50, 50)),
+        wall(point(50, 50), point(40, 50), getRandomColor(), portal(2, 1)),
+        wall(point(40, 50), point(40, 0)),
+      ]),
+      sector(DEFAULT_HEIGHT, [
+        wall(point(60, 50), point(60, 30)),
+        wall(point(60, 30), point(60, 20)),
+        wall(point(60, 20), point(60, 0)),
+        wall(point(60, 0), point(90, 0)),
+        wall(point(90, 0), point(90, 10)),
+        wall(point(90, 10), point(80, 10)),
+        wall(point(80, 10), point(80, 20)),
+        wall(point(80, 20), point(90, 20)),
+        wall(point(90, 20), point(90, 30), getRandomColor(), portal(1, 0)),
+        wall(point(90, 30), point(80, 30)),
+        wall(point(80, 30), point(80, 40)),
+        wall(point(80, 40), point(90, 40)),
+        wall(point(90, 40), point(90, 50)),
+        wall(point(90, 50), point(60, 50)),
+      ]),
+    ],
   },
 };
 
