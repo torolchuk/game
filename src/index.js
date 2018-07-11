@@ -7,6 +7,7 @@ import { createGameReducer } from './game/reducer';
 import renderTransformed from './game/view/transformed';
 import renderPerspective from './game/view/perspective';
 import { CANVAS_WIDTH, CANVAS_HEIGHT, PERSPECTIVE_WIDTH, PERSPECTIVE_HEIGHT } from './consts';
+import {generateRandomMaze} from "./util/maze";
 
 const generator$ = interval( Scheduler.requestAnimationFrame).pipe(
   withLatestFrom(createKeysStream(), takeSecond()),
@@ -42,3 +43,5 @@ generator$.pipe(createGameReducer()).subscribe(({ time, state }) => {
 });
 
 module.hot && module.hot.accept(() => window.location.reload());
+
+console.log(generateRandomMaze(4));
